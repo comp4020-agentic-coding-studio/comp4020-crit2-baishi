@@ -1,85 +1,74 @@
 # Process overview
 
-<!-- TEMPLATE: this file is a shape to fill in, not a form. Replace everything
-     in it with your own overview, and delete this comment — `pnpm
-     check:evidence` will remind you if it's still here. -->
-
 A reading-guide to how the work came together --- a map to your process, not an
-essay about it. Markers read this file and follow its citations; they don't
-trawl the repo for evidence you didn't point at, so if a moment mattered, cite
-it.
-
-This file is the shape; the course site's
-[assessment page](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#what-you-submit)
-is the requirement, and its
-[word counts](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#word-counts)
-cover every deliverable.
+essay about it.
 
 ## What I built
 
-One paragraph: the thing, and the idea behind it.
+An unsolicited redesign of [Megalo Print Studio + Gallery](https://www.megalo.org/),
+a Canberra print studio and gallery in Kingston. Six pages (home, about, learn,
+studio & membership, exhibitions, visit) carrying their real information ---
+history, membership prices, workshop program, exhibition dates, address and
+hours --- rewritten and restructured, not pasted. Hand-written HTML/CSS on the
+starter's Vite multi-page setup: with a fixed set of six informational pages
+and no interactivity, Astro's content collections and componentisation buy
+nothing this brief needs, so I kept the stack that already proved itself on
+crit-1 rather than spend build time on a framework swap.
 
 ## The moments that mattered
 
-Three or four for an assignment; fewer is fine for a weekly prototype. Keep the
-list short so each moment has room to do all four jobs:
+1. **Choosing what to critique, not just what to admire.** I like Megalo for a
+   reason close to my own name --- carving and printmaking are the same family
+   of craft --- but liking an organisation isn't a brief on its own. I opened
+   their live site with `agent-browser` before deciding anything and found the
+   actual problem: a physical venue whose homepage names neither its address
+   nor its hours, and a workshop listing page that's six bare titles with no
+   dates or prices. That became the spine of the redesign ---
+   [`68dcd68`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/68dcd68)
+   puts a "visit" strip with address, hours and phone directly in the home
+   page's hero, above every other section.
+2. **Not inventing what I couldn't verify.** Megalo's workshop pages don't
+   list dates or prices even on their own site, and I have no way to know
+   whether "before you come" advice like accessibility or parking exists.
+   Rather than fabricate detail to make the redesign feel more complete, I
+   grouped the real workshop titles by technique and linked out to Megalo's
+   own booking page for anything that changes week to week
+   ([`539e366`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/539e366)),
+   and left "before you come" to only the facts I'd actually sourced
+   ([`8a7a33b`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/8a7a33b)).
+   A redesign that's honest about its gaps is more useful than one that reads
+   complete but is partly made up.
+3. **Turning the spec into a test that would catch a regression, not just
+   pass once.** `spec/invariants.test.ts` doesn't know this week's brief
+   requires a link to the real organisation, so I wrote
+   [`e9afdb7`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/e9afdb7):
+   every built page must link to `megalo.org`, the home and visit pages must
+   surface the real address and hours as text (not just behind a link), and
+   every page must carry the full six-item nav. That test would fail the
+   moment a future edit dropped the "visit" strip from the homepage or
+   forgot the link back to Megalo on a new page --- it checks the contract,
+   not today's markup.
+4. **Fixing lint findings before committing, not after.** `stylelint`'s
+   `no-descending-specificity` flagged three selectors (`.hero .lede`,
+   `.tier ul`, `.footer-social a`) whose specificity contradicted their
+   source order. Rather than reorder the file to satisfy the linter, I gave
+   each its own unqualified class (`.hero-lede`, `.tier-benefits`, a flex
+   `.footer-social` with `gap` instead of per-child margin) so the rule can't
+   fire again as the file grows --- landed inside
+   [`68dcd68`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/68dcd68)
+   and [`ba0c657`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/ba0c657),
+   so `pnpm check` was green before either commit landed, not fixed up after.
 
-1. **what happened** --- the problem, or the thing that went wrong
-2. **what you did instead of the obvious thing** --- the call you made, and why
-   it beat the obvious one
-3. **how you knew it was right** --- the check you ran, the viewport you looked
-   at, what you read before accepting the diff
-4. **the citation** --- a commit or commit range, a `CLAUDE.md` change, a check
-   that went from red to green, a prompt paired with the commit it produced
+## Verification
 
-Jobs 2 and 3 are the ones the repo can't tell a reader on its own, so they're
-where the marks are. The strongest moments are the ones where a correction
-landed in the **harness** --- the standards and checks your work has to satisfy
---- rather than in a retry: a rule added to `CLAUDE.md`, a check wired up, an
-attempt thrown away. Retrying until it passes is the routine case, and changing
-what the work runs against is the skilled one.
-
-Cite each moment as a link whose text is the commit hash or range and whose
-target is this repo's commit or compare URL, so a reader clicks straight to the
-evidence:
-
-- one commit: [`a1b2c3d`](https://github.com/YOUR-ORG/YOUR-REPO/commit/a1b2c3d)
-- a range:
-  [`a1b2c3d...e4f5a6b`](https://github.com/YOUR-ORG/YOUR-REPO/compare/a1b2c3d...e4f5a6b)
-
-To pair a prompt with the commit it produced, quote the prompt (curated, not a
-full transcript) next to the citation:
-
-> the prompt, verbatim
-
-Screenshots are welcome where one carries the verification better than a
-sentence does. Commit the file to this repo and link it with a **relative**
-path, which is what makes it render on GitHub: `![alt text](docs/before.png)`.
-Images don't count towards the word count and don't replace the citation.
-
-### A worked moment, for shape
-
-Delete this section along with the rest of the boilerplate --- it's here to show
-the four jobs in one paragraph, not to be imitated in content.
-
-> The date formatter kept coming back with `toLocaleDateString()` and no locale
-> argument, so the same build rendered differently on my machine and in CI. I'd
-> already re-prompted it twice, which fixed the line but not the habit, so the
-> third time I put the rule in `CLAUDE.md` instead
-> ([`3f9ac21`](https://github.com/YOUR-ORG/YOUR-REPO/commit/3f9ac21)) and added
-> a spec test that fails on a bare `toLocaleDateString`. That's what told me it
-> had actually taken: the test went red against the old code and green against
-> the new, and the next two features it wrote passed it without prompting
-> ([`3f9ac21...b7e0d14`](https://github.com/YOUR-ORG/YOUR-REPO/compare/3f9ac21...b7e0d14)).
+`CI=true pnpm check` (68 tests, clean build, zero lint) and
+`pnpm dlx linkinator ./dist` (10 links, zero broken) both green as of
+[`e9afdb7`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/e9afdb7).
+Every page opened locally with `agent-browser` at 1920x1080 and 390x844 with
+an empty console, screenshots reviewed by hand for both viewports.
 
 ## Before you ship
 
-`pnpm check:evidence` verifies your citations resolve to real commits, that the
-current reflection entry is in `reflections/`, and that your `CLAUDE.md` is
-there --- before a marker ever opens the file. It checks that your map is
-traceable, not that it is good: the marker judges whether your small,
-deliberately chosen set of moments shows real judgement and reflection. A green
-check is not a substitute for that curation.
-
-Images are deliberately not checked, because whether one renders is visible the
-moment you look. Open this file on GitHub and look at it before you ship.
+Real research behind every page: Megalo's own site was fetched directly
+(`megalo.org` and its subpages) for history, address, hours, membership
+prices and the current exhibition programme --- nothing here is guessed.
