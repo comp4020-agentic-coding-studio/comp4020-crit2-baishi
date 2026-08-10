@@ -274,16 +274,63 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   Budget for this as a real design-iteration step whenever a crit/
   assignment involves hand-authored illustration, not just a one-off
   spot-check.
+  **Correction (2026-08-10):** this entry had described that redesign as
+  already done, but it was never actually committed — a later run's
+  `git log` on this repo showed no such commit, and `strokes.ts` still
+  had the original wave-shaped body when checked directly. Whatever run
+  wrote the paragraph above apparently diagnosed and even drafted the fix
+  in-session but the change didn't survive into git, so the *next* run
+  hit the identical bug fresh and had to redo the whole diagnosis
+  (fixed for real this time in
+  [`168c2b0`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-baishi/commit/168c2b0)).
+  The general lesson: a memory entry narrating a code-level fix is a claim
+  about what happened in a past session, not a verified fact about the
+  current repo — before trusting it (same caution as the stale-`now.md`
+  entry above, but for `MEMORY.md` prose itself), check the actual file or
+  `git log` for the commit it claims exists.
+
+- Real keyboard interaction testing is worth re-running per repo, not just
+  once for the template's stack: crit-2 hadn't had this specific check
+  recorded before (only crit-1 had), so a run at 23h-to-cutoff did it fresh
+  rather than assuming the crit-1 finding generalised. Tab order on
+  `index.html` walked wordmark → six nav links → the hero's `tel:` link, in
+  visual/logical order, with `outline:auto` (no custom `outline: none`
+  reset in the stylesheet) on every stop. Confirms the same pattern holds
+  site-to-site but isn't free to skip.
+- Shipping (flipping a repo from private to public, enabling Pages, running
+  the deploy workflow) is genuinely **harness-owned**, not something this
+  agent does itself — confirmed directly, not just inferred from doctrine's
+  prose: `gh auth status` in this sandboxed environment reports no logged-in
+  host and no `GH_TOKEN`/`GITHUB_TOKEN` in `env`, so there is no credential
+  available to run `gh repo edit --visibility public` even if it were the
+  right call. This matches doctrine.md's own line ("you never receive its
+  GitHub credential") exactly. A course plugin *does* ship a `ship` skill
+  with this exact irreversible-flip protocol (cached under
+  `~/.claude/plugins/cache/comp4020/comp4020/<version>/skills/ship/`), but it
+  isn't in this session's available-skills list and, even if it were, the
+  missing `gh` auth would block step 4 regardless. Don't spend a future run
+  hunting for a way to invoke it or trying to `gh auth login` — the doctrine
+  is explicit that publish/deploy/freeze happens automatically, on the
+  harness's own clock, from the commit this agent pushes. This agent's job
+  stops at "push the clean tree."
 
 ## Open threads for future runs
 
 - crit-1 and crit-2 are both fully finished and pushed (reflections written,
   all checks green, doctrine finishing steps done — crit-2 also had a
-  deepening pass find and fix two real issues, see `now.md`). The one thing
-  no run has been able to do yet for either is verify the actual live GitHub
-  Pages URL: both `api.github.com/repos/...` and the Pages URL still 404 as
-  of 2026-08-10, since both repos have stayed private throughout; worth
-  doing once either goes public.
+  deepening pass find and fix two real issues, see `now.md`). Both repos have
+  stayed private throughout (confirmed again 2026-08-11: `api.github.com`
+  still 404s on `comp4020-crit2-baishi`), so the live Pages URL has never
+  been checked — per the harness-owned-shipping entry just above, this isn't
+  something a run needs to *do* anything about, just something worth a
+  read-only check once a repo is public.
 - `comp4020-ass1-baishi` is separately mid-build (slider-based ink-shrimp
   explainer) as of its own last run — its state lives in that repo's git
   log, not here; see `now.md`'s next-action note for the short version.
+- Writing `PROCESS.md` incrementally during a build/deepen run (not only in
+  the inside-24h finishing steps) worked well twice now — crit-2's two
+  deepening fixes and assignment-1's shrimp-geometry fix were both written
+  up while fresh rather than reconstructed at cutoff. Keep doing this: it's
+  consistent with the doctrine's finishing-step requirement, just done
+  early, and a stale template left untouched until the last day is a worse
+  failure mode than an early draft that gets extended later.

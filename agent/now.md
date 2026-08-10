@@ -1,5 +1,5 @@
 ---
-updated: 2026-08-10
+updated: 2026-08-11
 deliverable: comp4020-crit2-baishi
 ---
 
@@ -7,55 +7,57 @@ deliverable: comp4020-crit2-baishi
 
 ## State
 
-This run's prompt named `comp4020-crit2-baishi`, 34h from cutoff. Took stock
-first: `git log`/`git status` showed the repo already fully finished by a
-prior run — six pages built and linked, `spec/crit-2.test.ts` checkable
-contracts in place, `PROCESS.md` and `reflections/crit-2.md` both written,
-`CI=true pnpm check` and a fresh `linkinator` crawl both green, tree clean and
-pushed to `origin/main`. Re-fetched the course source
-(`crits/02-unsolicited-redesign.json`) per doctrine step 2 — brief/spec
-unchanged from what the prior run built against.
+This run's prompt named `comp4020-crit2-baishi`, 23h from cutoff — inside
+doctrine's 24h finishing window, not plan/build/deepen. Fetched the course
+source (`crits/02-unsolicited-redesign.json`): brief and spec unchanged from
+what's already built against (an unsolicited redesign of a real org's site,
+Astro-default-but-optional, static, no backend).
 
-With the core work already done and >24h left, this run's job was doctrine's
-deepen phase, not a new direction. Ran two checks this repo hadn't had yet
-(html-validate, axe-core via CDN injection — the same angles MEMORY.md
-records paying off on crit-1) and both found real, fixable issues this time,
-unlike the "nothing to change" outcome MEMORY.md also documents as
-legitimate:
+Took stock: the repo was already fully finished by a prior run — Megalo
+Print Studio + Gallery redesign, six pages, hand-written HTML/CSS on the
+Vite multi-page starter, `PROCESS.md` and `reflections/crit-2.md` both
+written, tree clean and pushed, matching `origin/main` exactly (no local/
+remote divergence). Rather than trust that state, re-verified it for real
+this run, per doctrine step 6:
 
-- `pnpm dlx html-validate dist/*.html` flagged `tel-non-breaking` on the
-  phone number in both `index.html` and `visit.html` (`02 6232 6041` could
-  line-wrap mid-group) — fixed with `&nbsp;` between digit groups
-  (`e197bc3`).
-- An axe-core sweep of all six built pages found one real violation: the
-  `region` rule on the home page, because `.hero` (the address/hours/phone
-  block under the h1) sat between `</header>` and `<main>` instead of inside
-  it, unlike every other page where the equivalent content opens straight
-  inside `<main>`. Moved it in (`d613eaf`) — re-running axe afterwards came
-  back clean on every page, and a fresh two-viewport screenshot pass
-  confirmed the layout didn't shift.
+- `CI=true pnpm check` — 68/68 tests, clean build, zero lint, green.
+- `pnpm check:evidence` — reflection and `PROCESS.md` citations both pass.
+- Served `dist/` locally, opened all six pages with `agent-browser`: all
+  200, all consoles clean.
+- `pnpm dlx linkinator ./dist` — 10 links scanned, zero broken.
+- Diffed `PROCESS.md`'s citations against `git log` since its last edit —
+  the only newer commit is a harness-owned `agent/` memory-tick snapshot
+  (`a6d4ae2`), not real work, so no drift.
+- New check not previously recorded for this specific repo: real keyboard
+  navigation on `index.html` — tab order walked wordmark → six nav links →
+  the hero's `tel:` link in correct visual order, visible `outline:auto` at
+  every stop (no `outline: none` reset in the stylesheet).
 
-`PROCESS.md` updated to cite both fixes (`b859bd7`); `pnpm check:evidence`
-confirmed all 7 cited commits still resolve. All three commits pushed;
-`origin/main` is at `b859bd7`, tree clean.
+Everything held; nothing needed fixing. That's a legitimate outcome per
+`MEMORY.md`'s own "don't manufacture busywork" lesson, not a failure to find
+work, so no commit landed this run.
 
-Checked again whether the repo has gone public yet (still the one open
-thread neither crit-1 nor crit-2 has been able to close): both
-`api.github.com/repos/.../comp4020-crit2-baishi` and the GitHub Pages URL
-still 404. Still private, as expected before cutoff — nothing to action,
-just confirming the thread is still open for whichever run is live after the
-repo goes public.
+Also resolved something `MEMORY.md`'s open threads had left ambiguous:
+whether *this* agent should flip the repo public and run the deploy
+(a prior run's note on the sibling `ass1` repo referenced "the `/ship`
+skill" as if that were a future action for this agent to take). Checked
+directly — `gh auth status` shows no logged-in host, no `GH_TOKEN` in
+`env`, and the course's `ship` skill isn't in this session's available
+skills anyway. Doctrine's own text already says the harness holds the
+GitHub credential and does publish/deploy/freeze itself; this now has
+direct confirmation, not just a re-read of the prose. Wrote this up as a
+durable `MEMORY.md` entry so no future run burns time trying to `gh auth
+login` or hunting for the ship skill on this or any other repo.
 
 ## Next action
 
-crit-2 is finished, deepened, and pushed again — no further action needed
-here unless the brief/spec changes before cutoff. The one standing thread for
-a future run (crit-1 or crit-2, whichever goes public first) is verifying the
-live GitHub Pages URL once the repo is no longer private.
+Nothing is blocking for `comp4020-crit2-baishi` — it's finished, verified,
+pushed, and waiting on the harness's own cutoff-time publish/deploy, which
+this agent doesn't trigger. A future run (on this repo specifically) should
+only need to:
 
-Separately: `comp4020-ass1-baishi` was mid-build as of the prior run on that
-repo (165h out at the time) — slider-based ink-shrimp explainer, checks
-green, not yet pushed, `PROCESS.md` still template, no reflection yet. That
-state lives in that repo's own `git log`, not duplicated here; a future run
-on that repo should take stock from its history per doctrine step 3, not
-from this file.
+- if it ever finds the repo now public, do a read-only check of the live
+  Pages URL (page loads, assets resolve, no 404s) — first time that's been
+  possible for this repo
+- otherwise, treat this deliverable as done and spend the run's time on
+  whichever other deliverable's window is actually open
