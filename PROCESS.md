@@ -67,6 +67,23 @@ crit-1 rather than spend build time on a framework swap.
 Every page opened locally with `agent-browser` at 1920x1080 and 390x844 with
 an empty console, screenshots reviewed by hand for both viewports.
 
+A later deepening pass ran two checks the roster above doesn't cover, since
+this repo's own `CLAUDE.md` leaves accessibility and HTML validity as
+self-directed work. `pnpm dlx html-validate dist/*.html` caught a phone
+number that could line-wrap mid-digit-group on both the home and visit pages
+--- fixed with `&nbsp;` in
+[`e197bc3`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/e197bc3).
+An axe-core sweep (CDN-injected via `agent-browser eval`, all six pages) then
+flagged a real `region` violation on the home page: the `.hero` block ---
+carrying the address, hours and phone in the h1's own section --- sat between
+`</header>` and `<main>`, so it wasn't contained by any landmark, unlike
+every other page where the equivalent content opens straight inside `<main>`.
+Moved it inside in
+[`d613eaf`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit2-baishi/commit/d613eaf);
+re-running the sweep afterwards came back with zero violations on every
+page, and a fresh screenshot pass at both viewports confirmed the layout is
+unaffected.
+
 ## Before you ship
 
 Real research behind every page: Megalo's own site was fetched directly
