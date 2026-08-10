@@ -3,22 +3,135 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COMP4020 prototype</title>
+    <title>Megalo Print Studio + Gallery — Kingston, Canberra</title>
+    <meta
+      name="description"
+      content="Megalo Print Studio + Gallery is Canberra's open-access print studio: screenprint, lithography, relief and intaglio under one roof since 1980."
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header>
-      <nav aria-label="Primary">
-        <a href="./">Home</a>
-      </nav>
+      <div class="header-row">
+        <p class="wordmark"><a href="./">Megalo Print Studio + Gallery</a></p>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="./" aria-current="page">Home</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./learn.html">Learn</a></li>
+            <li><a href="./studio.html">Studio &amp; membership</a></li>
+            <li><a href="./exhibitions.html">Exhibitions</a></li>
+            <li><a href="./visit.html">Visit</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <h1>The only studio in Australia with every print process under one roof</h1>
+        <p class="hero-lede">
+          Screenprint, lithography, relief and intaglio, open to anyone —
+          from a first-timer with an afternoon free to a working artist
+          finishing an edition. Megalo has kept print accessible in Canberra
+          since 1980.
+        </p>
+        <dl class="visit-strip">
+          <div>
+            <dt>Where</dt>
+            <dd>21 Wentworth Avenue, Kingston ACT 2604</dd>
+          </div>
+          <div>
+            <dt>Office &amp; gallery hours</dt>
+            <dd>Tuesday&ndash;Saturday, 9:30am&ndash;5:00pm</dd>
+          </div>
+          <div>
+            <dt>Talk to us</dt>
+            <dd><a href="tel:+61262326041">02 6232 6041</a></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
     <main>
-      <h1>COMP4020 prototype</h1>
-      <p data-testid="intro">
-        Replace this with your prototype. This week's brief is on the course website;
-        <code>spec/README.md</code> explains how the checks in this repo relate to it.
-      </p>
+      <section aria-labelledby="pathways-heading">
+        <h2 id="pathways-heading">Three ways in</h2>
+        <ul class="pathways">
+          <li class="pathway">
+            <h3>Take a class</h3>
+            <p>
+              Short workshops in every technique, plus ongoing tuition and
+              school programs — no studio membership required.
+            </p>
+            <a class="button" href="./learn.html">See what's on</a>
+          </li>
+          <li class="pathway">
+            <h3>Get studio access</h3>
+            <p>
+              Members work independently in the Screen Studio or Press
+              Studio, at member rates, year-round.
+            </p>
+            <a class="button" href="./studio.html">Compare membership</a>
+          </li>
+          <li class="pathway">
+            <h3>See the gallery</h3>
+            <p>
+              A new exhibition roughly every six weeks, free to visit during
+              gallery hours.
+            </p>
+            <a class="button" href="./exhibitions.html">What's on show</a>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="now-heading">
+        <h2 id="now-heading">On the walls now</h2>
+        <div class="exhibition-now">
+          <p class="eyebrow">Exhibition — 15 August to 26 September</p>
+          <h3>A Most Peculiar Star — Patsy Payne</h3>
+          <p>
+            Free to visit during gallery hours at 21 Wentworth Avenue,
+            Kingston. See the
+            <a href="./exhibitions.html">full exhibitions programme</a> for
+            what's coming next.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="about-heading">
+        <h2 id="about-heading">Forty-five years of keeping print open</h2>
+        <p>
+          Megalo started in 1980 as a screenprint cooperative, at a time
+          when youth unemployment in Canberra had climbed above 20 per cent
+          — print as a skill worth having, not just an art form. It later
+          absorbed Studio One, the city's etching and lithography press,
+          which is why Megalo is now the only studio in the country
+          offering screenprint, lithography, relief and intaglio in one
+          building.
+          <a href="./about.html">Read the full history</a>.
+        </p>
+      </section>
     </main>
-    <script type="module" src="./main.ts"></script>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-note">
+          <p>
+            This is an independent student redesign made for a university
+            studio unit, not Megalo's official site. For current bookings,
+            opening times and news, go to
+            <a href="https://www.megalo.org/">megalo.org</a>.
+          </p>
+          <p>
+            Megalo Print Studio acknowledges the Ngunnawal, Ngunawal and
+            Ngambri nations, on whose unceded land it stands.
+          </p>
+        </div>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/megaloprintstudio/">Facebook</a>
+          <a href="https://www.instagram.com/megaloprintstudio/">Instagram</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
