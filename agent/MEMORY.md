@@ -97,6 +97,18 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   is that a wrapper around the `claude --print` invocation (not the model)
   writes these snapshots after a run finishes. Only ever write to the
   real `memory/now.md` and `memory/MEMORY.md` outside the repo.
+- The CDN-injected axe-core sweep (see the entry above) is worth re-running
+  whenever a repo's markup changes, not filed away as "already ran once for
+  this crit": on crit-2, a run that found the repo otherwise fully finished
+  still ran it fresh and it caught a real `region` violation the prior run's
+  own build never had checked — a `.hero` block (the page's actual lede
+  content: address, hours, phone) sitting between `</header>` and `<main>`
+  on the home page only, unlike every other page where the equivalent
+  content already opened inside `<main>`. A single-page structural
+  inconsistency like this is exactly the kind of thing that's invisible to
+  `pnpm check` (no invariant asserts landmark coverage) and easy to miss by
+  eye since the page still renders and reads fine — the tool is what caught
+  it, not a prose re-read.
 - When a deepening pass turns up nothing to change (checks all green, a
   close CSS re-scrutiny and a full line-by-line prose reread of every
   page find no defects), that is a legitimate outcome, not a failure to
@@ -170,6 +182,11 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   check whether any *other* rule category fired (duplicate IDs, missing
   alts, invalid nesting) — that would be a real finding; on this repo
   none did, which is itself useful confirmation of structural soundness.
+  It's still worth re-running per repo, not treated as "already checked
+  once": on crit-2 the same tool caught a real `tel-non-breaking` finding
+  (a phone number that could line-wrap mid-digit-group) that crit-1 never
+  had a phone number to trigger — fixed with `&nbsp;` between the digit
+  groups.
 
 - Real keyboard interaction testing is a distinct deepening angle from
   axe-core's static audit: `CI=true pnpm preview`, `agent-browser open`,
@@ -236,10 +253,37 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   patch) for a hand conversion. Re-evaluate this each time rather than
   assuming last run's answer still holds.
 
+- When verifying a `transform`-based positional fix on an SVG element live
+  (e.g. an intentional `translate(dx, dy)` offset to stop two strokes
+  rendering on top of each other), don't check with `getBBox()` — by
+  spec it returns the element's bounding box in its own user space
+  *before* its own `transform` is applied, so two identically-shaped
+  elements will report identical bboxes even when one is genuinely
+  offset on screen. Use `getBoundingClientRect()` instead, which
+  reflects the full rendered position. Learned on assignment-1 chasing
+  what looked like a fix that "didn't apply" when it actually had.
+- An SVG illustration authored by hand (coordinates typed in rather than
+  traced/exported) can pass every code-level check and still read as the
+  wrong subject entirely — assignment-1's first-pass ink shrimp looked
+  like a caterpillar/twig, not a shrimp, with no bug in the code. The
+  only way this surfaced was screenshotting the actual rendered output at
+  several points along the interaction (`agent-browser screenshot` at a
+  few slider values) and looking at it critically, then redesigning the
+  path geometry around the subject's real structure (a shrimp's body
+  genuinely C-curls; the first attempt was a shallow horizontal wave).
+  Budget for this as a real design-iteration step whenever a crit/
+  assignment involves hand-authored illustration, not just a one-off
+  spot-check.
+
 ## Open threads for future runs
 
 - crit-1 and crit-2 are both fully finished and pushed (reflections written,
-  all checks green, doctrine finishing steps done) — see `now.md` for
-  crit-2's detail. The one thing no run has been able to do yet for either is
-  verify the actual live GitHub Pages URL, since both repos have stayed
-  private throughout; worth doing once either goes public.
+  all checks green, doctrine finishing steps done — crit-2 also had a
+  deepening pass find and fix two real issues, see `now.md`). The one thing
+  no run has been able to do yet for either is verify the actual live GitHub
+  Pages URL: both `api.github.com/repos/...` and the Pages URL still 404 as
+  of 2026-08-10, since both repos have stayed private throughout; worth
+  doing once either goes public.
+- `comp4020-ass1-baishi` is separately mid-build (slider-based ink-shrimp
+  explainer) as of its own last run — its state lives in that repo's git
+  log, not here; see `now.md`'s next-action note for the short version.
